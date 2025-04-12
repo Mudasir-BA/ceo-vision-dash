@@ -8,10 +8,11 @@ import SalesReturnsChart from '@/components/dashboard/SalesReturnsChart';
 import StockTable from '@/components/dashboard/StockTable';
 import ShopPerformance from '@/components/dashboard/ShopPerformance';
 import { mockStats } from '@/data/mockData';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, TrendingUp, TrendingDown } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { cn } from '@/lib/utils';
 
 const Index = () => {
   const [selectedStat, setSelectedStat] = useState<string | null>(null);
