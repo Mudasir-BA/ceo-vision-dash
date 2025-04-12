@@ -52,10 +52,10 @@ const SalesChart = () => {
                   axisLine={false} 
                   tickMargin={10}
                   tick={{ fontSize: 12 }}
-                  tickFormatter={(value) => `$${value.toLocaleString()}`}
+                  tickFormatter={(value) => `₹${value.toLocaleString()}`}
                 />
                 <Tooltip 
-                  formatter={(value: any) => [`$${value.toLocaleString()}`, 'Sales']}
+                  formatter={(value: any) => [`₹${value.toLocaleString()}`, 'Sales']}
                   labelFormatter={(label) => `Date: ${label}`}
                 />
                 <Line 
@@ -105,10 +105,10 @@ const SalesChart = () => {
                   axisLine={false} 
                   tickMargin={10}
                   tick={{ fontSize: 12 }}
-                  tickFormatter={(value) => `$${value.toLocaleString()}`}
+                  tickFormatter={(value) => `₹${value.toLocaleString()}`}
                 />
                 <Tooltip 
-                  formatter={(value: any) => [`$${value.toLocaleString()}`, 'Sales']}
+                  formatter={(value: any) => [`₹${value.toLocaleString()}`, 'Sales']}
                   labelFormatter={(label) => `Week: ${label}`}
                 />
                 <Area 
@@ -146,10 +146,10 @@ const SalesChart = () => {
                   axisLine={false} 
                   tickMargin={10}
                   tick={{ fontSize: 12 }}
-                  tickFormatter={(value) => `$${value.toLocaleString()}`}
+                  tickFormatter={(value) => `₹${value.toLocaleString()}`}
                 />
                 <Tooltip 
-                  formatter={(value: any) => [`$${value.toLocaleString()}`, 'Sales']}
+                  formatter={(value: any) => [`₹${value.toLocaleString()}`, 'Sales']}
                   labelFormatter={(label) => `Month: ${label}`}
                 />
                 <Bar dataKey="current" fill="#7c3aed" name="This Year" radius={[4, 4, 0, 0]} />
