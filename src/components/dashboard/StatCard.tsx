@@ -36,6 +36,11 @@ const StatCard: React.FC<StatCardProps> = ({
   if (isTrendPositive) trendColor = inverseColors ? "text-dashboard-negative" : "text-dashboard-positive";
   if (isTrendNegative) trendColor = inverseColors ? "text-dashboard-positive" : "text-dashboard-negative";
 
+  // Format the value to include PKR currency symbol and comma-separated thousands
+  const formattedValue = typeof value === 'number' 
+    ? `Rs. ${value.toLocaleString()}` 
+    : value;
+
   return (
     <Card className={cn("overflow-hidden", colorClass)}>
       <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
@@ -43,7 +48,7 @@ const StatCard: React.FC<StatCardProps> = ({
         {icon && <div className="text-muted-foreground">{icon}</div>}
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">{value}</div>
+        <div className="text-2xl font-bold">{formattedValue}</div>
         {description && (
           <div className="flex items-center mt-1">
             {trend !== undefined && (

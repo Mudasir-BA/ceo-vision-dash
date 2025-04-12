@@ -41,7 +41,7 @@ const SalesReturnsChart = () => {
               orientation="left" 
               tickLine={false} 
               axisLine={false}
-              tickFormatter={(value) => `₹${value/1000}k`}
+              tickFormatter={(value) => `Rs.${value/1000}k`}
             />
             <YAxis 
               yAxisId="right"
@@ -52,7 +52,7 @@ const SalesReturnsChart = () => {
             />
             <Tooltip
               formatter={(value: any, name: string) => {
-                if (name === "sales") return [`₹${(value/1000).toFixed(1)}k`, 'Sales'];
+                if (name === "sales") return [`Rs.${(value/1000).toFixed(1)}k`, 'Sales'];
                 if (name === "returnRate") return [`${value}%`, 'Return Rate'];
                 return [value, name];
               }}
