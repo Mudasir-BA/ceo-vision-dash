@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Calendar, ChevronDown, Search, Bell, User } from 'lucide-react';
+import { Calendar, ChevronDown, Search, Bell, User, Maximize } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
@@ -19,7 +19,12 @@ import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 
-const TopBar = () => {
+interface TopBarProps {
+  isPresentationMode?: boolean;
+  togglePresentationMode?: () => void;
+}
+
+const TopBar: React.FC<TopBarProps> = ({ isPresentationMode = false, togglePresentationMode }) => {
   const [date, setDate] = React.useState<Date>(new Date());
   
   return (
@@ -87,6 +92,17 @@ const TopBar = () => {
             type="search"
           />
         </div>
+        {togglePresentationMode && (
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="rounded-full"
+            onClick={togglePresentationMode}
+            title={isPresentationMode ? "Exit Presentation Mode" : "Enter Presentation Mode"}
+          >
+            <Maximize className="h-5 w-5" />
+          </Button>
+        )}
         <Button variant="ghost" size="icon" className="rounded-full">
           <Bell className="h-5 w-5" />
         </Button>
