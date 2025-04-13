@@ -68,10 +68,10 @@ const ChartsPresentationView = () => {
   const categoriesWithPercentage = calculatePercentages(categoryReturns);
 
   return (
-    <div className="animate-fade-in space-y-8">
+    <div className="animate-fade-in space-y-8 w-full">
       <h1 className="text-3xl font-bold text-center mb-8">Dashboard Insights</h1>
       
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <Card>
           <CardHeader>
             <CardTitle>Returns by Reason</CardTitle>
