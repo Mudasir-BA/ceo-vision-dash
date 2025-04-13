@@ -25,6 +25,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const StockTable = () => {
   const [selectedItem, setSelectedItem] = useState<typeof mockLowStockItems[0] | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const [viewType, setViewType] = useState("Low Stock");
 
   const handleViewDetails = (item: typeof mockLowStockItems[0]) => {
     setSelectedItem(item);
@@ -65,78 +66,197 @@ const StockTable = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
-                Low Stock
+                {viewType}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>Low Stock</DropdownMenuItem>
-              <DropdownMenuItem>Zero Stock</DropdownMenuItem>
-              <DropdownMenuItem>Fast-Moving Low Stock</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setViewType("Low Stock")}>Low Stock</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setViewType("Zero Stock")}>Zero Stock</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setViewType("Return Card")}>Return Card</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Item Code</TableHead>
-                <TableHead>Item Name</TableHead>
-                <TableHead>Division / Sub Division</TableHead>
-                <TableHead className="text-right">Current Stock</TableHead>
-                <TableHead className="text-right">Reorder Level</TableHead>
-                <TableHead className="text-right">Coverage (Days)</TableHead>
-                <TableHead className="text-center">Status</TableHead>
-                <TableHead></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {mockLowStockItems.map((item) => (
-                <TableRow key={item.code}>
-                  <TableCell className="font-medium">{item.code}</TableCell>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.division} / {item.subdivision}</TableCell>
-                  <TableCell className="text-right">{item.currentStock}</TableCell>
-                  <TableCell className="text-right">{item.reorderLevel}</TableCell>
-                  <TableCell className="text-right">
-                    <span className={item.coverageDays < 3 ? "text-dashboard-negative" : item.coverageDays < 7 ? "text-dashboard-warning" : ""}>
-                      {item.coverageDays}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {item.currentStock === 0 ? (
-                      <Badge variant="destructive" className="gap-1">
-                        <AlertCircle size={12} /> Zero Stock
-                      </Badge>
-                    ) : item.fastMoving ? (
-                      <Badge variant="secondary" className="gap-1 bg-dashboard-warning text-white">
-                        Fast-Moving
-                      </Badge>
-                    ) : (
-                      <Badge variant="outline" className="gap-1 border-dashboard-negative text-dashboard-negative">
-                        Low Stock
-                      </Badge>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Open menu</span>
+          {viewType === "Low Stock" && (
+            <div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="mb-4">
+                    View Options
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>Show by Shop</DropdownMenuItem>
+                  <DropdownMenuItem>Show by Category</DropdownMenuItem>
+                  <DropdownMenuItem>Show Summary</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Item Code</TableHead>
+                    <TableHead>Item Name</TableHead>
+                    <TableHead>Division / Sub Division</TableHead>
+                    <TableHead className="text-right">Current Stock</TableHead>
+                    <TableHead className="text-right">Reorder Level</TableHead>
+                    <TableHead className="text-right">Coverage (Days)</TableHead>
+                    <TableHead className="text-center">Status</TableHead>
+                    <TableHead></TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {mockLowStockItems.filter(item => item.currentStock > 0).map((item) => (
+                    <TableRow key={item.code}>
+                      <TableCell className="font-medium">{item.code}</TableCell>
+                      <TableCell>{item.name}</TableCell>
+                      <TableCell>{item.division} / {item.subdivision}</TableCell>
+                      <TableCell className="text-right">{item.currentStock}</TableCell>
+                      <TableCell className="text-right">{item.reorderLevel}</TableCell>
+                      <TableCell className="text-right">
+                        <span className={item.coverageDays < 3 ? "text-dashboard-negative" : item.coverageDays < 7 ? "text-dashboard-warning" : ""}>
+                          {item.coverageDays}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {item.fastMoving ? (
+                          <Badge variant="secondary" className="gap-1 bg-dashboard-warning text-white">
+                            Fast-Moving
+                          </Badge>
+                        ) : (
+                          <Badge variant="outline" className="gap-1 border-dashboard-negative text-dashboard-negative">
+                            Low Stock
+                          </Badge>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <Button variant="ghost" size="icon" onClick={() => handleViewDetails(item)}>
+                          <Eye className="h-4 w-4" />
+                          <span className="sr-only">View details</span>
                         </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => handleViewDetails(item)} className="flex items-center gap-2">
-                          <Eye size={14} />
-                          View Details
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
+          
+          {viewType === "Zero Stock" && (
+            <div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="mb-4">
+                    View Options
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>Show by Shop</DropdownMenuItem>
+                  <DropdownMenuItem>Show by Category</DropdownMenuItem>
+                  <DropdownMenuItem>Show Summary</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Item Code</TableHead>
+                    <TableHead>Item Name</TableHead>
+                    <TableHead>Division / Sub Division</TableHead>
+                    <TableHead className="text-right">Current Stock</TableHead>
+                    <TableHead className="text-right">Reorder Level</TableHead>
+                    <TableHead className="text-right">Last in Stock</TableHead>
+                    <TableHead className="text-center">Status</TableHead>
+                    <TableHead></TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {mockLowStockItems.filter(item => item.currentStock === 0).map((item) => (
+                    <TableRow key={item.code}>
+                      <TableCell className="font-medium">{item.code}</TableCell>
+                      <TableCell>{item.name}</TableCell>
+                      <TableCell>{item.division} / {item.subdivision}</TableCell>
+                      <TableCell className="text-right">{item.currentStock}</TableCell>
+                      <TableCell className="text-right">{item.reorderLevel}</TableCell>
+                      <TableCell className="text-right">3 days ago</TableCell>
+                      <TableCell className="text-center">
+                        <Badge variant="destructive" className="gap-1">
+                          <AlertCircle size={12} /> Zero Stock
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Button variant="ghost" size="icon" onClick={() => handleViewDetails(item)}>
+                          <Eye className="h-4 w-4" />
+                          <span className="sr-only">View details</span>
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
+          
+          {viewType === "Return Card" && (
+            <div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="mb-4">
+                    View Options
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>Show Overview</DropdownMenuItem>
+                  <DropdownMenuItem>Show by Category</DropdownMenuItem>
+                  <DropdownMenuItem>Show by Reason</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Item Code</TableHead>
+                    <TableHead>Item Name</TableHead>
+                    <TableHead>Category</TableHead>
+                    <TableHead className="text-right">Units Sold</TableHead>
+                    <TableHead className="text-right">Units Returned</TableHead>
+                    <TableHead className="text-right">Return Rate</TableHead>
+                    <TableHead>Return Reason</TableHead>
+                    <TableHead></TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {[
+                    { code: 'P001', name: 'Milk 1L', category: 'Dairy', sold: 450, returned: 14, returnRate: '3.1%', reason: 'Expired' },
+                    { code: 'P002', name: 'Bread', category: 'Bakery', sold: 320, returned: 8, returnRate: '2.5%', reason: 'Damaged' },
+                    { code: 'P003', name: 'Yogurt', category: 'Dairy', sold: 250, returned: 10, returnRate: '4.0%', reason: 'Quality Issue' },
+                    { code: 'P004', name: 'Chips', category: 'Snacks', sold: 180, returned: 5, returnRate: '2.8%', reason: 'Packaging' },
+                    { code: 'P005', name: 'Ice Cream', category: 'Frozen', sold: 120, returned: 3, returnRate: '2.5%', reason: 'Melted' }
+                  ].map((item, i) => (
+                    <TableRow key={i}>
+                      <TableCell className="font-medium">{item.code}</TableCell>
+                      <TableCell>{item.name}</TableCell>
+                      <TableCell>{item.category}</TableCell>
+                      <TableCell className="text-right">{item.sold}</TableCell>
+                      <TableCell className="text-right">{item.returned}</TableCell>
+                      <TableCell className="text-right text-dashboard-negative">{item.returnRate}</TableCell>
+                      <TableCell>
+                        <Badge variant="outline" className="bg-red-50 text-red-800 border-red-200">
+                          {item.reason}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Button variant="ghost" size="icon">
+                          <Eye className="h-4 w-4" />
+                          <span className="sr-only">View details</span>
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
         </CardContent>
       </Card>
 
