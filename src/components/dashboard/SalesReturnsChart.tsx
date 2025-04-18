@@ -13,7 +13,11 @@ import {
 } from "recharts";
 import { mockSalesReturns } from '@/data/mockData';
 
-const SalesReturnsChart = () => {
+interface SalesReturnsChartProps {
+  dataType: 'quantity' | 'amount';
+}
+
+const SalesReturnsChart: React.FC<SalesReturnsChartProps> = ({ dataType }) => {
   return (
     <Card className="col-span-12 lg:col-span-6">
       <CardHeader>

@@ -13,7 +13,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TrendingDown, TrendingUp } from 'lucide-react';
 import { mockTopShops, mockBottomShops } from '@/data/mockData';
 
-const ShopPerformance = () => {
+interface ShopPerformanceProps {
+  dataType: 'quantity' | 'amount';
+}
+
+const ShopPerformance: React.FC<ShopPerformanceProps> = ({ dataType }) => {
   return (
     <Card className="col-span-12 lg:col-span-4">
       <CardHeader className="pb-2">

@@ -18,7 +18,11 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { mockDailySales, mockWeeklySales, mockMonthlySales } from '@/data/mockData';
 
-const SalesChart = () => {
+interface SalesChartProps {
+  dataType: 'quantity' | 'amount';
+}
+
+const SalesChart: React.FC<SalesChartProps> = ({ dataType }) => {
   return (
     <Card className="col-span-12 lg:col-span-8">
       <CardHeader className="pb-2">
