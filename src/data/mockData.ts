@@ -3,19 +3,22 @@
 export const mockStats = [
   {
     title: "Total Sales",
-    value: "$1,234,567",
+    value: "1,234,567",
+    amountValue: 1234567,
     trend: 8.2,
     icon: "📈",
   },
   {
     title: "Target Achievement",
     value: "87.5%",
+    amountValue: 87.5,
     trend: -2.7,
     icon: "🎯",
   },
   {
     title: "Returns",
     value: "5.3%",
+    amountValue: 5.3,
     trend: -1.4,
     icon: "📦",
     inverseColors: true,
@@ -23,6 +26,7 @@ export const mockStats = [
   {
     title: "Low Stock Items",
     value: "24",
+    amountValue: 24,
     trend: 12.3,
     icon: "⚠️",
     inverseColors: true,
@@ -30,6 +34,7 @@ export const mockStats = [
   {
     title: "Zero Stock Items",
     value: "7",
+    amountValue: 7,
     trend: -14.5,
     icon: "❌",
     inverseColors: false,

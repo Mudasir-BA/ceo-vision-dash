@@ -78,7 +78,7 @@ const Index = () => {
             <StatCard 
               key={index}
               title={stat.title}
-              value={dataType === 'amount' ? `Rs. ${stat.amountValue?.toLocaleString()}` : stat.value}
+              value={dataType === 'amount' && stat.amountValue !== undefined ? `Rs. ${stat.amountValue.toLocaleString()}` : stat.value}
               trend={stat.trend}
               icon={<span className="text-xl">{stat.icon}</span>}
               inverseColors={stat.inverseColors}
